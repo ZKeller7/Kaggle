@@ -75,5 +75,5 @@ NBmodel <- naiveBayes(cook_train, cook_training_labels)
 #predicting
 preds <- predict(NBmodel, cook_test)
 
-#confusion matrix - 69% accuracy
+#confusion matrix 
 confusionMatrix(preds, cook_test_labels)
