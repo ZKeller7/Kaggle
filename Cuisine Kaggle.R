@@ -14,8 +14,7 @@ cook <- fromJSON("train.json", flatten = TRUE)
 #check data imported correctly
 View(cook)
 
-#setting seed - you can skip if you want a different random sample, but you will get the same results I did 
-#if you see the same seed
+#setting seed
 set.seed(74)
 
 #re-code target feature as a factor
@@ -27,9 +26,6 @@ cook_corpus <- VCorpus(VectorSource(cook$ingredients))
 
 #convert corpus to a document term matrix
 #control operations are TOLOWER, REMOVENUMBERS, STOPWORDS, REMOVEPUNCTUATION and STEMMING
-#this is the first point where i think you went wrong - punctuation definitely needs to be stripped
-#and "stopwords" should also be removed. You can read more about stopwords as you like
-#but essentially they are useless words like 'and', 'the' or 'they'
 cook_DTM <- DocumentTermMatrix(cook_corpus, control = list(
   tolower = TRUE, 
   removeNumbers = TRUE, 
@@ -50,8 +46,8 @@ cook_test <- cook_DTM[-q,]
 cook_training_labels <- cook[q,]$cuisine
 cook_test_labels <- cook[-q,]$cuisine
 
-#this is the second place where i think your code can be improved - I filtered my DTM to only include words 
-#repeated more than twice - this will increase specificity BUT it comes at the cost of lowering
+#filtered my DTM to only include words repeated more than twice
+#this will increase specificity BUT it comes at the cost of lowering
 #the impact from very unique words 
 
 #returning vector of all words repeated at least twice
